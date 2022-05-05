@@ -5,13 +5,21 @@ export type ProductType = {
     count: number
     size: SizeType
     weight: string
-    comments: string[]
+    comments: CommentType[]
     description: string
-    sorted: number
+    isSorted: number
 }
 
 type SizeType = {
     width: number,
     height: number
+}
+
+export type CommentType = {
+    id: number
+    productId: number
+    description: string
+    date: string
+    editMode: boolean
 }
 

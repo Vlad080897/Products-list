@@ -1,26 +1,26 @@
-import { Button, Fade, Modal, TextField, Typography } from '@mui/material';
+import { Button, Fade, Modal, TextField, Typography, Menu, MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { modal } from '../../styles/styles';
 
-const modal = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: '#FFF',
-  borderRadius: '10px',
-  boxShadow: 24,
-  p: 4,
-};
-
-const ModalWindow = (props: { addNewProduct: (productInfo: newProductInfo) => void }) => {
-  const { addNewProduct } = props
-  const [open, setOpen] = React.useState(false);
+const ModalAddProduct = (props: { addNewProduct: (productInfo: newProductInfo) => void, sortProducts: (sortBy: string) => void }) => {
+  const { addNewProduct, sortProducts } = props
+  const [open, setOpen] = useState(false);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [sortButtonValue, setSortButtonValue] = useState<null | string>('Alphabet')
+  const menuOpen = Boolean(menuAnchor);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(event.currentTarget);
+  };
+  const handleMenuClose = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(null);
+    setSortButtonValue(event.currentTarget.innerText);
+    sortProducts(event.currentTarget.innerText);
+  };
 
   const validationSchema = Yup.object().shape({
     name: Yup
@@ -28,7 +28,7 @@ const ModalWindow = (props: { addNewProduct: (productInfo: newProductInfo) => vo
       .required('Add name'),
     imageURL: Yup
       .string()
-      .matches(/^ *https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]* *)$/g, 'Your url is not correct')
+      .matches(/^ *https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]* *)$/g, 'Your url is not correct')
       .required('Add url'),
     count: Yup
       .string()
@@ -47,14 +47,38 @@ const ModalWindow = (props: { addNewProduct: (productInfo: newProductInfo) => vo
       description: ''
     },
     validationSchema: validationSchema,
-    onSubmit: (values: newProductInfo) => {
-      addNewProduct(values)
-      handleClose()
+    onSubmit: (values: newProductInfo, { resetForm }) => {
+      addNewProduct(values);
+      handleClose();
+      resetForm();
     },
   });
   return (
     <>
-      <Button variant='contained' onClick={handleOpen} sx={{ mt: 2 }}>Add new product</Button>
+      <Box display={'flex'} justifyContent={'space-between'}>
+        <Button variant='contained' onClick={handleOpen} sx={{ mt: 2 }}>Add new product</Button>
+        <Box>
+          <Typography component={'span'}>Sorted by:</Typography>
+          <Button
+            id='fade-button'
+            aria-controls={menuOpen ? 'open-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={menuOpen ? 'true' : undefined}
+            onClick={handleOpenMenu}
+          >
+            {sortButtonValue}
+          </Button>
+          <Menu
+            id='open-menu'
+            open={menuOpen}
+            anchorEl={menuAnchor}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleMenuClose}>Alphabet</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Count</MenuItem>
+          </Menu>
+        </Box>
+      </Box>
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -128,7 +152,7 @@ const ModalWindow = (props: { addNewProduct: (productInfo: newProductInfo) => vo
   )
 }
 
-export default ModalWindow
+export default ModalAddProduct
 
 export type newProductInfo = {
   name: string

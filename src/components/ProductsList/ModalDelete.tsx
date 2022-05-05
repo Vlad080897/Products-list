@@ -3,19 +3,8 @@ import { Box } from '@mui/system';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { deleteProduct } from '../../app/ProductsList';
+import { modal } from '../../styles/styles';
 import { ProductType } from '../../types/types';
-
-const modal = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: '#FFF',
-  borderRadius: '10px',
-  boxShadow: 24,
-  p: 4,
-};
 
 const ModalDelete =
   (props: { products?: ProductType[], deleteID: number | undefined, openDelete: boolean, setOpenDelete: Dispatch<SetStateAction<boolean>> }) => {

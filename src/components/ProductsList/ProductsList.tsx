@@ -1,37 +1,70 @@
 import { Box, Button, Container, Divider, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { addNewProduct, getProducts } from '../../app/ProductsList'
+import { addNewProduct, getComments, getProducts } from '../../app/ProductsList'
 import { getProductsSelector } from '../../selectors/productsList'
 import { ProductType } from '../../types/types'
-import ModalWindow, { newProductInfo } from './Modal'
+import ModalAddProduct, { newProductInfo } from './ModalAddProduct'
 import ModalDelete from './ModalDelete'
+import ModalComments from './ModalComments'
+import ModalEdit from './ModalEdit'
 
 const ProductsList = () => {
   const productsFromData = useAppSelector(getProductsSelector);
   const [products, setNewProducts] = useState<ProductType[]>()
-  const [openDelete, setOpenDelete] = React.useState<boolean>(false);
-  const [deleteID, setDeleteID] = React.useState<number | undefined>()
+  const [openBtn, setOpenBtn] = useState<boolean>(false);
+  const [openEdit, setOpenEdit] = useState<boolean>(false)
+  const [openID, setOpenID] = useState<number | null>(null)
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [deleteID, setDeleteID] = useState<number | undefined>()
   const dispatch = useAppDispatch();
+  const handleOpen = () => setOpenDelete(true);
 
   const addNewProductFunc = (productInfo: newProductInfo) => {
-    dispatch(addNewProduct(productInfo))
+    dispatch(addNewProduct(productInfo));
   };
 
   useEffect(() => {
     dispatch(getProducts())
+    dispatch(getComments())
   }, [dispatch]);
 
   useEffect(() => {
-    setNewProducts(productsFromData)
-  }, [productsFromData])
+    setNewProducts(productsFromData);
+  }, [productsFromData, dispatch]);
 
-  const handleOpen = () => setOpenDelete(true);
+  const openModalInfo = (id: number) => {
+    setOpenID(id);
+    setOpenBtn(true);
+  }
+  const openEditInfo = (id: number) => {
+    setOpenID(id);
+    setOpenEdit(true);
+  }
 
   const handleClick = (id: number) => {
     setDeleteID(id)
     handleOpen()
   };
+
+  const sortProducts = (sortBy: string) => {
+    let newProducts
+    if (products?.length) {
+      newProducts = [...products].map(p => {
+        p = { ...p }
+        return p
+      })
+      if (sortBy === 'Alphabet') {
+        newProducts = newProducts?.sort((product1, product2) => product1.name.localeCompare(product2.name))
+        setNewProducts(newProducts)
+      }
+      if (sortBy === 'Count') {
+        newProducts = newProducts?.sort((p1, p2) => p1.count - p2.count)
+        setNewProducts(newProducts)
+      }
+    }
+
+  }
   return (
     <Container>
       <Box >
@@ -46,8 +79,6 @@ const ProductsList = () => {
       <Box pt={2} pl={2} pr={2} mt={2} sx={{ border: '2px solid #42a5f5', borderRadius: '20px' }}>
         {products &&
           products
-            .sort((product1, product2) => product1.name.localeCompare(product2.name))
-            //.sort((product1,product2 ) => Number(product1.count) - Number(product2.count))
             .map((product) => {
               return (
                 <Box key={product.id}>
@@ -57,7 +88,9 @@ const ProductsList = () => {
                       <Typography variant='h5' sx={{ fontWeight: '700' }}>{product.name}</Typography>
                       <Typography variant='h6' sx={{ fontWeight: '400' }}>{product.description}</Typography>
                       <Typography variant='h6' sx={{ fontWeight: '400' }}>count: {product.count}</Typography>
-                      <Button variant='contained' color='warning' onClick={() => handleClick(product.id)}>Delet Product</Button>
+                      <Button variant='contained' color='primary' sx={{ mr: 1 }} onClick={() => openEditInfo(product.id)}>Edit</Button>
+                      <Button variant='contained' color='primary' sx={{ mr: 1 }} onClick={() => openModalInfo(product.id)}>Commnets</Button>
+                      <Button variant='contained' color='warning' onClick={() => handleClick(product.id)}>Delet</Button>
                     </Box>
                   </Box>
                   <Divider />
@@ -66,8 +99,10 @@ const ProductsList = () => {
             })
         }
       </Box>
-      <ModalWindow addNewProduct={addNewProductFunc} />
+      <ModalAddProduct addNewProduct={addNewProductFunc} sortProducts={sortProducts} />
       <ModalDelete products={products} deleteID={deleteID} openDelete={openDelete} setOpenDelete={setOpenDelete} />
+      <ModalComments products={products} openBtn={openBtn} setOpenBtn={setOpenBtn} openID={openID} />
+      <ModalEdit products={products} open={openEdit} close={setOpenEdit} openId={openID} />
     </Container >
   )
 }
