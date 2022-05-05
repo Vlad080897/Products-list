@@ -1,8 +1,8 @@
 # Products list imitation 
-In that project you can see imitation of producs list imitation. 
+In that project you can see imitation of producs list. 
 
 **The app allows:**
-1. See the list of products that were requsted from API
+1. See the list of products that were requested from API
 2. Add new product
 3. Delete product
 4. Add, update or delete comments
