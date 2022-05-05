@@ -1,17 +1,17 @@
-import { Button, Divider, Fade, List, ListItem, ListSubheader, Modal, TextareaAutosize, TextField, Typography } from '@mui/material';
+import { Button, Divider, Fade, List, ListItem, ListSubheader, Modal, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { formatRelative, subDays } from 'date-fns';
 import { useFormik } from 'formik';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import * as Yup from 'yup';
 import { useAppDispatch } from '../../app/hooks';
 import { addNewComment, deleteComment, toggleEdit, updateComment } from '../../app/ProductsList';
 import { modal } from '../../styles/styles';
 import { ProductType } from '../../types/types';
-import * as Yup from 'yup';
 
 const commentsButtons = {
   mr: 1,
-  color: '#ede7f6',
+  color: '#9575cd',
   padding: 0,
   minWidth: 'fit-content',
   '&:hover': {
@@ -29,25 +29,25 @@ const ModalComments: React.FC<ModalInfoProps> = ({ products, openBtn, setOpenBtn
 
   useEffect(() => {
     const openedProduct = products?.find(el => el.id === openID);
-    setOpenedProduct(openedProduct)
-  }, [openBtn, products, openID])
+    setOpenedProduct(openedProduct);
+  }, [openBtn, products, openID]);
 
   const handleEdit = (productId: number, commentId: number) => {
-    dispatch(toggleEdit(productId, commentId))
-    setEditingComment(commentId)
+    dispatch(toggleEdit(productId, commentId));
+    setEditingComment(commentId);
   }
 
   const handleCancel = (productId: number, commentId: number) => {
-    dispatch(toggleEdit(productId, commentId))
-    setEditingComment(null)
+    dispatch(toggleEdit(productId, commentId));
+    setEditingComment(null);
   }
 
   const handleUpdate = (commentId: number, productId: number, description: string) => {
     const date = formatRelative(subDays(new Date(), 0), new Date());
-    dispatch(updateComment(commentId, productId, description, date))
+    dispatch(updateComment(commentId, productId, description, date));
   }
   const handleDelete = (id: number) => {
-    dispatch(deleteComment(id))
+    dispatch(deleteComment(id));
   }
   const handleAddComment = (productId: number, description: string) => {
     const date = formatRelative(subDays(new Date(), 0), new Date());
@@ -73,10 +73,10 @@ const ModalComments: React.FC<ModalInfoProps> = ({ products, openBtn, setOpenBtn
     validationSchema: validationUpdateComment,
     onSubmit: (values: vulesUpdateComment, { resetForm }) => {
       if (editingCommet && openedProduct) {
-        handleUpdate(editingCommet, openedProduct.id, values.commentText)
-        handleCancel(editingCommet, openedProduct.id)
-      }
-      resetForm()
+        handleUpdate(editingCommet, openedProduct.id, values.commentText);
+        handleCancel(editingCommet, openedProduct.id);
+      };
+      resetForm();
     },
   });
 
@@ -88,8 +88,8 @@ const ModalComments: React.FC<ModalInfoProps> = ({ products, openBtn, setOpenBtn
     onSubmit: (values: vulesNewComment, { resetForm }) => {
       if (openedProduct) {
         handleAddComment(openedProduct?.id, values.newComment)
-      }
-      resetForm()
+      };
+      resetForm();
     },
   });
 
@@ -98,8 +98,6 @@ const ModalComments: React.FC<ModalInfoProps> = ({ products, openBtn, setOpenBtn
   return (
     <Box>
       <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
         open={openBtn}
         onClose={() => {
           if (openedProduct) {
@@ -120,10 +118,9 @@ const ModalComments: React.FC<ModalInfoProps> = ({ products, openBtn, setOpenBtn
           <Box sx={modal}>
             <Box>
               <List
-
                 subheader={
-                  < ListSubheader component="div" >
-                    Comments
+                  <ListSubheader component="div" >
+                    <Typography>Comments</Typography>
                     <Divider />
                   </ListSubheader>
                 }>

@@ -6,10 +6,10 @@ import * as Yup from 'yup';
 import { modal } from '../../styles/styles';
 
 const ModalAddProduct = (props: { addNewProduct: (productInfo: newProductInfo) => void, sortProducts: (sortBy: string) => void }) => {
-  const { addNewProduct, sortProducts } = props
+  const { addNewProduct, sortProducts } = props;
   const [open, setOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-  const [sortButtonValue, setSortButtonValue] = useState<null | string>('Alphabet')
+  const [sortButtonValue, setSortButtonValue] = useState<null | string>('Alphabet');
   const menuOpen = Boolean(menuAnchor);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,8 +80,6 @@ const ModalAddProduct = (props: { addNewProduct: (productInfo: newProductInfo) =
         </Box>
       </Box>
       <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -98,7 +96,8 @@ const ModalAddProduct = (props: { addNewProduct: (productInfo: newProductInfo) =
               <TextField
                 id="name"
                 name="name"
-                fullWidth label='Name'
+                label='Name'
+                fullWidth
                 variant='standard'
                 value={formik.values.name}
                 onChange={formik.handleChange}
@@ -131,10 +130,10 @@ const ModalAddProduct = (props: { addNewProduct: (productInfo: newProductInfo) =
                 sx={{ mb: 3 }}
               />
               <TextField
-                id="count"
+                id="description"
                 name="description"
-                fullWidth
                 label='Description'
+                fullWidth
                 variant='standard'
                 value={formik.values.description}
                 onChange={formik.handleChange}

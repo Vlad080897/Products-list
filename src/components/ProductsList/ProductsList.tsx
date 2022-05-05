@@ -50,16 +50,16 @@ const ProductsList = () => {
   const sortProducts = (sortBy: string) => {
     let newProducts
     if (products?.length) {
-      newProducts = [...products].map(p => {
-        p = { ...p }
-        return p
+      newProducts = [...products].map(product => {
+        product = { ...product }
+        return product
       })
       if (sortBy === 'Alphabet') {
         newProducts = newProducts?.sort((product1, product2) => product1.name.localeCompare(product2.name))
         setNewProducts(newProducts)
       }
       if (sortBy === 'Count') {
-        newProducts = newProducts?.sort((p1, p2) => p1.count - p2.count)
+        newProducts = newProducts?.sort((product1, product2) => product1.count - product2.count)
         setNewProducts(newProducts)
       }
     }

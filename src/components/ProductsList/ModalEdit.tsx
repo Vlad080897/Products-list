@@ -13,7 +13,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ open, close, openId, products }) 
   const [editModeDescription, setEditModeDescription] = useState(false);
   const [editModeCount, setEditModeCountName] = useState(false);
   const [editModeUrl, setEditModeUrl] = useState(false);
-  const openedProduct = products?.find(el => el.id === openId)
+  const openedProduct = products?.find(el => el.id === openId) // define opened product
   const dispatch = useAppDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -22,6 +22,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ open, close, openId, products }) 
       .matches(/^ *https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]* *)$/g, 'Your url is not correct')
   })
 
+  //form for change inputs
   const formik = useFormik({
     initialValues: {
       newName: '',

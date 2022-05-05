@@ -2,33 +2,18 @@
   "products": [
     {
       "imageUrl": "https://images.unsplash.com/photo-1585155770447-2f66e2a397b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
-      "name": "AirPods3",
-      "description": "Amazing Sound",
-      "count": 10,
+      "name": "AirPods",
+      "description": "Feel the sound ",
+      "count": 20,
       "comments": [],
       "id": 4
-    },
-    {
-      "imageUrl": "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1422&q=80",
-      "name": "Test",
-      "description": "Test",
-      "count": 2,
-      "comments": [],
-      "id": 5
     }
   ],
   "comments": [
     {
-      "productId": 5,
-      "description": "Amazing Bike",
-      "date": "today at 12:12 PM",
-      "editMode": false,
-      "id": 2
-    },
-    {
       "productId": 4,
-      "description": "Amazing phones",
-      "date": "today at 12:11 PM",
+      "description": "1111",
+      "date": "today at 2:07 PM",
       "editMode": false,
       "id": 3
     }

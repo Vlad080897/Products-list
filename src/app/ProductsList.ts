@@ -4,10 +4,9 @@ import { productsAPI } from './../api/products-api';
 import { newProductInfo } from '../components/ProductsList/ModalAddProduct';
 import { AppThunk } from './store';
 
-const GET_PRODUCTS = 'GET_PRODUCTS'
-const GET_COMMENTS = 'GET_COMMENTS'
-const UPDATE_COMMENT = 'UPDATE_COMMENT'
-const TOGGLE_EDIT = 'TOGGLE_EDIT'
+const GET_PRODUCTS = 'GET_PRODUCTS';
+const GET_COMMENTS = 'GET_COMMENTS';
+const TOGGLE_EDIT = 'TOGGLE_EDIT';
 
 const initialState = {
   products: [] as ProductType[]
@@ -23,27 +22,27 @@ const ProductsList = (state: InitialState = initialState, action: ActionsTypes):
     case GET_COMMENTS:
       return {
         ...state,
-        products: [...state.products].map(p => {
-          p = { ...p }
-          const sortedComments = action.comments.filter(c => c.productId === p.id)
-          p.comments = [...sortedComments]
-          return p
+        products: [...state.products].map(product => {
+          product = { ...product }
+          const sortedComments = action.comments.filter(comment => comment.productId === product.id)
+          product.comments = [...sortedComments]
+          return product
         })
       }
     case TOGGLE_EDIT:
       return {
         ...state,
-        products: [...state.products].map(p => {
-          if (p.id === action.productId) {
-            p = { ...p }
-            p.comments = [...p.comments].map((c) => {
-              if (c.id === action.commentId) {
-                return { ...c, editMode: !c.editMode }
+        products: [...state.products].map(product => {
+          if (product.id === action.productId) {
+            product = { ...product }
+            product.comments = [...product.comments].map(comment => {
+              if (comment.id === action.commentId) {
+                return { ...comment, editMode: !comment.editMode }
               }
-              return c
+              return comment
             })
           }
-          return p
+          return product
         })
       }
 
@@ -62,12 +61,6 @@ const actions = {
     return {
       type: GET_COMMENTS,
       comments
-    } as const
-  },
-  updateComment: (comment: CommentType) => {
-    return {
-      type: UPDATE_COMMENT,
-      comment
     } as const
   },
   toggleEdit: (productId: number, commentId: number) => {
@@ -102,9 +95,8 @@ export const deleteProduct = (id: number | undefined): AppThunk => async (dispat
 }
 
 export const updateProduct = (id: number, imageUrl: string, name: string, description: string, count: number,): AppThunk => async (dispatch) => {
-  const res = await productsAPI.updateProduct(id, imageUrl, name, description, count)
-  console.log(res);
-  dispatch(getProducts())
+  await productsAPI.updateProduct(id, imageUrl, name, description, count)
+  dispatch(getProducts());
 
 }
 
@@ -120,7 +112,7 @@ export const deleteComment = (id: number): AppThunk => async (dispatch) => {
 
 export const addNewComment = (productId: number, description: string, date: string): AppThunk => async (dispatch) => {
   await productsAPI.addNewComment(productId, description, date)
-  dispatch(getComments())
+  dispatch(getComments());
 }
 
 export const toggleEdit = (productId: number, commentId: number): AppThunk => async (dispatch) => {
@@ -130,5 +122,7 @@ export const toggleEdit = (productId: number, commentId: number): AppThunk => as
 export default ProductsList;
 
 type InitialState = typeof initialState;
+
+// infer type of each Action
 type InferValueType<T> = T extends { [key: string]: infer U } ? U : never;
 export type ActionsTypes = ReturnType<InferValueType<typeof actions>>;

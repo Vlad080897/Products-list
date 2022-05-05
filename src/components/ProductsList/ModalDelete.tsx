@@ -9,10 +9,10 @@ import { ProductType } from '../../types/types';
 const ModalDelete =
   (props: { products?: ProductType[], deleteID: number | undefined, openDelete: boolean, setOpenDelete: Dispatch<SetStateAction<boolean>> }) => {
     const { products, openDelete, deleteID, setOpenDelete, } = props
-    const productForDelete = products && products.find(el => el.id === deleteID);
+    const productForDelete = products && products.find(el => el.id === deleteID); // defined the opened product
     const dispatch = useAppDispatch();
 
-    const handleClose = () => setOpenDelete(false);
+    const handleClose = () => setOpenDelete(false);  // close modal window
 
     const handleDelete = () => {
       dispatch(deleteProduct(deleteID))
@@ -21,8 +21,6 @@ const ModalDelete =
 
     return (
       <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
         open={openDelete}
         onClose={handleClose}
         closeAfterTransition
@@ -32,7 +30,7 @@ const ModalDelete =
       >
         <Fade in={openDelete}>
           <Box sx={modal}>
-            <Typography id="spring-modal-title" variant="h4" component="h2" color={'#42a5f5'} mb={5}>
+            <Typography variant="h4" component="h2" color={'#42a5f5'} mb={5}>
               Delete the product?
             </Typography>
             {productForDelete && (

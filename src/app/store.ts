@@ -3,6 +3,7 @@ import ProductsList, { ActionsTypes } from './ProductsList';
 
 export const store = configureStore({
   reducer: {
+    //TODO: check it
     //@ts-ignore
     productsList: ProductsList
   },
