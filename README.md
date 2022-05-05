@@ -14,3 +14,5 @@ In that project you can see imitation of producs list.
 2. Run the terminal in your IDE
 3. Run json-server with such command 1)json-server --watch data/db.json
 4. Run the app with npm start
+
+**Also notice that to run this project you should have json-server installed**
