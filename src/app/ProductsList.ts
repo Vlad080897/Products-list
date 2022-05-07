@@ -50,7 +50,7 @@ const ProductsList = (state: InitialState = initialState, action: ActionsTypes):
   };
 };
 
-const actions = {
+export const actions = {
   getProducts: (products: ProductType[]) => {
     return {
       type: GET_PRODUCTS,

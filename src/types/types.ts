@@ -3,11 +3,8 @@ export type ProductType = {
     imageUrl: string
     name: string
     count: number
-    size: SizeType
-    weight: string
     comments: CommentType[]
     description: string
-    isSorted: number
 }
 
 type SizeType = {
