@@ -11,8 +11,8 @@ In that project you can see imitation of producs list.
 
 **How to run the app**: 
 1. Download or Clone code from this repo
-2. Run the terminal in your IDE
-3. Run json-server with such command 1)json-server --watch data/db.json
+2. Run the terminal in your IDE and come to the folder with the project, then install the project with npm install
+3. Run json-server with such command json-server --watch data/db.json --port 3000 (take a notice that the data folder is in src folder)
 4. Run the app with npm start
 
 **Also notice that to run this project you should have json-server installed**
