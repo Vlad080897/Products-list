@@ -5,8 +5,8 @@ import { addNewProduct, getComments, getProducts } from '../../app/ProductsList'
 import { getProductsSelector } from '../../selectors/productsList'
 import { ProductType } from '../../types/types'
 import ModalAddProduct, { newProductInfo } from './ModalAddProduct'
-import ModalDelete from './ModalDelete'
 import ModalComments from './ModalComments'
+import ModalDelete from './ModalDelete'
 import ModalEdit from './ModalEdit'
 
 const ProductsList = () => {

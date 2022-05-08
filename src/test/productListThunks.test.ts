@@ -10,19 +10,17 @@ import {
     toggleEdit
 } from "../app/ProductsList"
 jest.mock("../api/products-api")
+const dispatch = jest.fn()
+const getState = jest.fn()
 
 describe('ProductListThunk; Each thunk should call dispatch func relevant amount of times', () => {
     test('getProductsThunk', async () => {
         const getProductsThunk = getProducts();
-        const dispatch = jest.fn()
-        const getState = jest.fn()
         await getProductsThunk(dispatch, getState, {})
         expect(dispatch).toBeCalledTimes(1)
     })
     test('getCommentsThunk', async () => {
         const getCommentsThunk = getComments();
-        const dispatch = jest.fn()
-        const getState = jest.fn()
         await getCommentsThunk(dispatch, getState, {})
         expect(dispatch).toBeCalledTimes(1)
     })
@@ -34,17 +32,13 @@ describe('ProductListThunk; Each thunk should call dispatch func relevant amount
             description: 'Product_description',
         }
         const addNewProductThunk = addNewProduct(product);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await addNewProductThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(2)
+        await addNewProductThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(2);
     })
     test('deleteProductThunk', async () => {
         const deleteProductThunk = deleteProduct(1);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await deleteProductThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(2)
+        await deleteProductThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(2);
     })
     test('updateProduct', async () => {
         let product = {
@@ -55,10 +49,8 @@ describe('ProductListThunk; Each thunk should call dispatch func relevant amount
             count: 1,
         }
         const updateProductThunk = updateProduct(product.id, product.imageUrl, product.name, product.description, product.count);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await updateProductThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(1)
+        await updateProductThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(1);
     })
     test('updateComment', async () => {
         let comment = {
@@ -68,17 +60,13 @@ describe('ProductListThunk; Each thunk should call dispatch func relevant amount
             date: "comment_date",
         }
         const updateCommentThunk = updateComment(comment.id, comment.productId, comment.description, comment.date);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await updateCommentThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(1)
+        await updateCommentThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(1);
     })
     test('deleteComment', async () => {
         const deleteCommentThunk = deleteComment(1);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await deleteCommentThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(1)
+        await deleteCommentThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(1);
     })
     test('addNewComment', async () => {
         let comment = {
@@ -87,16 +75,12 @@ describe('ProductListThunk; Each thunk should call dispatch func relevant amount
             date: 'comment_date'
         }
         const addNewCommentThunk = addNewComment(comment.productId, comment.description, comment.date);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await addNewCommentThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(1)
+        await addNewCommentThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(1);
     })
     test('toggleEdit', async () => {
         const toggleEditThunk = toggleEdit(1, 1);
-        const dispatch = jest.fn()
-        const getState = jest.fn()
-        await toggleEditThunk(dispatch, getState, {})
-        expect(dispatch).toBeCalledTimes(1)
+        await toggleEditThunk(dispatch, getState, {});
+        expect(dispatch).toBeCalledTimes(1);
     })
 })
